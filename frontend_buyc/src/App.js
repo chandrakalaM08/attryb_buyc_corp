@@ -1,14 +1,11 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar, { NavbarTwo } from "./components/Navbar";
+import AllRoutes from "./routes/AllRoutes";
 
 function App() {
   return (
     <div className="App">
-      <h1 style={{ fontWeight: "600", fontsize: "20px" }}>
-        Welcome to BUYC Corp
-      </h1>
-      <br />
-      <Navbar />
+      <AllRoutes />
     </div>
   );
 }
