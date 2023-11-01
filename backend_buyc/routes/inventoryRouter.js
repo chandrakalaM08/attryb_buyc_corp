@@ -5,13 +5,44 @@ const {
   authenticationMiddleware,
 } = require("../middlewares/authenticationMiddleware");
 
+
+
+
 const inventoryRouter = express.Router();
+
+inventoryRouter.use(authenticationMiddleware);
 inventoryRouter.get("/inventory", (req, res) => {
   res.send("Welcome to inventory");
 });
 inventoryRouter.post("/inventory", async (req, res) => {
+  console.log("logged", req.logged_id);
   try {
-    let newInventory = InventoryModel(req.body);
+    let {
+      pictures,
+      price,
+      title,
+      description,
+      kms,
+      majorScratches,
+      orginalPaint,
+      prevBuyers,
+      registrationPlace,
+      accidents,
+    } = req.body;
+    let newCar = {
+      pictures,
+      price,
+      title,
+      description,
+      kms,
+      majorScratches,
+      orginalPaint,
+      prevBuyers,
+      registrationPlace,
+      accidents,
+      userId: req.logged_id,
+    };
+    let newInventory = InventoryModel(newCar);
     await newInventory.save();
     res.status(200).send({ msg: "New Car Added Successsfully in Inventory" });
   } catch (error) {
@@ -75,6 +106,7 @@ inventoryRouter.patch("/inventory/:id", async (req, res) => {
     const payload = req.body;
 
     const inventory = await InventoryModel.findById(id);
+    console.log(inventory, "here");
 
     const inventoryCretorId = inventory.userId.toString();
 
@@ -94,7 +126,11 @@ inventoryRouter.patch("/inventory/:id", async (req, res) => {
       return;
     }
 
-    let updatedInventory = await InventoryModel.findByIdAndUpdate(id, req.body);
+    let updatedInventory = await InventoryModel.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
     res
       .status(200)
       .send({ msg: "Updated Car Details Successfully", updatedInventory });
