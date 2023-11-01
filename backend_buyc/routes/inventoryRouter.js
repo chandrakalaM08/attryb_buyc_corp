@@ -6,8 +6,13 @@ const {
 } = require("../middlewares/authenticationMiddleware");
 
 const inventoryRouter = express.Router();
+inventoryRouter.get("/inventory", async (req, res) => {
+  const carsData = await InventoryModel.find();
+  res.send(carsData); // Return the array of objects as JSON
+});
+
 inventoryRouter.use(authenticationMiddleware);
-inventoryRouter.get("/inventory", (req, res) => {
+inventoryRouter.get("/", (req, res) => {
   res.send("Welcome to inventory");
 });
 
