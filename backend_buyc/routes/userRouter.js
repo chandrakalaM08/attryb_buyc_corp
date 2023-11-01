@@ -9,7 +9,7 @@ const userRouter = Router();
 // this is for registering a new user
 userRouter.post("/register", async (req, res) => {
   try {
-    let { email, password, avatar, username } = req.body;
+    let { email, password, username } = req.body;
     let user = await UserModel.findOne({ email });
     if (!user) {
       let hashedPassword = await bcrypt.hash(password, 5);
