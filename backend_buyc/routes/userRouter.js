@@ -17,7 +17,6 @@ userRouter.post("/register", async (req, res) => {
       let newUser = await UserModel.create({
         username,
         email,
-        avatar,
         password: hashedPassword,
       });
       res.status(200).send({ msg: "User Created Successfully", user: newUser });

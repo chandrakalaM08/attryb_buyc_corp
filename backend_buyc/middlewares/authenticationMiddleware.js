@@ -11,7 +11,7 @@ const authenticationMiddleware = async (req, res, next) => {
     }
 
     let decoded = jwt.verify(token, "masai");
-    req.id = decoded.userId;
+    req.logged_id = decoded.userId;
     req.username = decoded.userName;
     req.email = decoded.userEmail;
     console.log("decoded is", decoded);
