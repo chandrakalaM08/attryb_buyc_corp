@@ -11,11 +11,12 @@ const app = express();
 
 app.use(cors()); //to avoid errors on frontend due to cross origin requests
 app.use(express.json()); //to get the data from the fronted in json  parsed format
-
+app.get("/", (req, res) => {
+  res.send("Welcome to BUYC");
+});
 app.use("/users", userRouter);
-app.use("/", inventoryRouter);
+app.use("/car", inventoryRouter);
 app.use("/oem", oemRouter);
-
 
 app.listen(process.env.port, async () => {
   try {

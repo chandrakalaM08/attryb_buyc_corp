@@ -6,12 +6,11 @@ const {
 } = require("../middlewares/authenticationMiddleware");
 
 const inventoryRouter = express.Router();
-
+inventoryRouter.use(authenticationMiddleware);
 inventoryRouter.get("/inventory", (req, res) => {
   res.send("Welcome to inventory");
 });
 
-inventoryRouter.use(authenticationMiddleware);
 inventoryRouter.post("/inventory", async (req, res) => {
   console.log("logged", req.logged_id);
   try {
